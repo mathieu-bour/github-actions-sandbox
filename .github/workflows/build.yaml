@@ -9,4 +9,4 @@ jobs:
     steps:
       - run: echo $EVENT | jq
         env:
-          EVENT: ${{ toJSON(value) }}
+          EVENT: ${{ toJSON(github.event) }}
