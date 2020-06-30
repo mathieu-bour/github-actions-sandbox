@@ -7,6 +7,6 @@ jobs:
     name: Emulate build
     runs-on: ubuntu-latest
     steps:
-      - run: echo $EVENT | jq
+      - run: echo $EVENT_PAYLOAD | jq -C '.'
         env:
-          EVENT: ${{ toJSON(github.event) }}
+          EVENT_PAYLOAD: ${{ toJSON(github.event) }}
