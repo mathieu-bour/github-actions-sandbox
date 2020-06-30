@@ -9,3 +9,22 @@ jobs:
       - run: echo $EVENT_PAYLOAD | jq -C '.'
         env:
           EVENT_PAYLOAD: ${{ toJSON(github.event) }}
+      - uses: avakar/set-deployment-status@v1
+        with:
+          state: in_progress
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          echo 'Performing the deployment...'
+          sleep 10
+      - uses: avakar/set-deployment-status@v1
+        with:
+          state: success
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: avakar/set-deployment-status@v1
+        if: failure()
+        with:
+          state: failure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
