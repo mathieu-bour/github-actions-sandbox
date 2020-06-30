@@ -10,3 +10,14 @@ jobs:
       - run: echo $EVENT_PAYLOAD | jq -C '.'
         env:
           EVENT_PAYLOAD: ${{ toJSON(github.event) }}
+      - uses: avakar/create-deployment@v1
+        with:
+          task: deploy_gke
+          auto_merge: false
+          payload: '{"image": "test.gcr.io"}'
+          environment: edge
+          description: Deployment of ${{ github.sha }} to edge
+          production_environment: false
+          required_contexts: ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}

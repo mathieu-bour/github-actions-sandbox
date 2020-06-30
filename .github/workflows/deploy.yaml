@@ -1,0 +1,11 @@
+name: Deploy project
+on:
+  deployment:
+jobs:
+  deploy:
+    name: Emulate deployment
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo $EVENT_PAYLOAD | jq -C '.'
+        env:
+          EVENT_PAYLOAD: ${{ toJSON(github.event) }}
